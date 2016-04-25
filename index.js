@@ -27,6 +27,10 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
+app.post('/auth/signin', function(req, res) {
+  console.log("sign in:", req.body)
+})
+
 app.get('/auth/signup', function(req, res) {
   res.render('signup', {alerts: req.flash()});
 });
@@ -48,7 +52,8 @@ app.post('/auth/signup', function(req, res) {
     	res.redirect('/auth/signup');
   	}
   }).catch(function(err) {
-    res.send(err);
+    req.flash('danger', err.message);
+    res.redirect('/auth/signup')
   });
 });
 
